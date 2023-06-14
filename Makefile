@@ -1,17 +1,18 @@
 TARGET=ArrIndexTest
 OBJ_DIR=objs
-SRC := $(wildcard *.c)
-OBJS := $(SRC:%.c$(OBJ_DIR)/%.o)
+SRC := $(wildcard ./*.c)
+OBJS := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-all: $(TARGET)
+all:  dir $(TARGET)
+
 dir:
-	@mkdir objs
+	@mkdir -p objs
 
-$(TARGET): dir $(OBJS)
-	@echo "Linking [\n\t$^\n\t]""
+$(TARGET): $(OBJS)
+	@echo "Linking [\n\t$^\n\t]"
 	@$(CC)  $^ -o $@
 
-$(OBJS): $(OBJ_DIR)/%.o:  %.c 
+$(OBJS): $(OBJ_DIR)/%.o:  ./%.c 
 	@printf "Compiling  [%-45s -> %s]\n" $< $@
 	@$(CC) -c $< -o $@
 
